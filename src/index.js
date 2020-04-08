@@ -8,6 +8,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reducer from './Store/Reducers/loginReducer';
+import { AuthProvider } from './Context/authContext';
 
 
 
@@ -22,9 +23,11 @@ const store = createStore(reducer, composeEnhancers(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <App />
+        </Router>
+      </AuthProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

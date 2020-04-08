@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as authActions from '../../Store/Actions/auth';
 import classes from './Auth.module.css';
 import { fb } from '../../Firebase/firebase';
+import { authContext } from '../../Context/authContext';
 
 
 
-const Login = (props) => {
+const Auth = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [signIn, setSignIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useContext(authContext);
+
+  useEffect(() => {
+    if (loggedIn) {
+      history.push('/home_page')
+    }
+  }, []);
 
   let history = useHistory();
 
-  fb.auth().onAuthStateChanged((user) => {
-    if (user) {
-      history.push('/home_page')
-    }
-  })
-
   const signUpHandler = () => {
     // props.signUp(email, password);
-    fb.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-      alert(error)
-    })
+    fb.auth().createUserWithEmailAndPassword(email, password)
+      .catch((error) => {
+        alert(error)
+      })
     setSignIn(true)
-
-    // props.signIn();
-    // fb.auth().signInWithEmailAndPassword(email, password).catch(error => {
-    //   console.log(error)
-    // })
-    // history.push('/home_page');
   };
 
   const signInHandler = () => {
-    fb.auth().signInWithEmailAndPassword(email, password).catch((error => {
-      alert(error)
-    }));
+    fb.auth().signInWithEmailAndPassword(email, password)
+      .catch((error => {
+        alert(error)
+      }));
+    history.push('/home_page')
+
   };
 
   let signButton = null
@@ -57,12 +57,7 @@ const Login = (props) => {
   );
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // signUp: (email, password) => dispatch(authActions.signUp(email, password)),
-    // signIn: (email, password) => dispatch(authActions.signIn(email, password))
-  }
 
-}
 
-export default connect(null, mapDispatchToProps)(Login);
+
+export default Auth;
