@@ -1,8 +1,12 @@
-.login {
-  border: 1px solid #bbbbbb;
+.auth {
   display: flex;
-  flex-flow: column;
-  width: 40%;
-  margin: auto; 
+  flex-direction: column;
+  width: 60%;
+  margin: auto;
+  padding: 10px;
+  background-color: lightgray;
 }
 
+.title {
+  background-color: orange;
+}

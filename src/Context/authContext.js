@@ -1,16 +1,20 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useContext } from 'react';
 import { fb } from '../Firebase/firebase';
 
 export const authContext = createContext();
 
 export const AuthProvider = (props) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState({ status: false, user: null });
+
 
 
   useEffect(() => {
     fb.auth().onAuthStateChanged(user => {
       if (user) {
-        setLoggedIn(true);
+        setLoggedIn({
+          status: true,
+          user: user
+        });
       } else {
         setLoggedIn(false);
       };

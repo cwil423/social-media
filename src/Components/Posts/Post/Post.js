@@ -1,12 +1,10 @@
 import React from 'react';
+import classes from './Post.module.css';
 
 const Post = (props) => {
-  return ( 
-    <h1>{props.info.title}: {props.info.post}</h1>
-   );
+  return (
+    <h2 className={classes.post}>{props.info.title}: {props.info.post}</h2>
+  );
 }
- 
-export default Post;
 
-const prettier = (props) =>{
-  console.log('sdflkj')}
+export default Post;

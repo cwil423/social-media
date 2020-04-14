@@ -1,0 +1,8 @@
+.navbar {
+  background-color: orange;
+}
+
+.navLinks {
+  display: flex;
+  justify-content: space-around;
+}

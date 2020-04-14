@@ -14,21 +14,21 @@ import { AuthProvider } from './Context/authContext';
 
 
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(
-  applyMiddleware(thunk)));
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const store = createStore(reducer, composeEnhancers(
+//   applyMiddleware(thunk)));
 
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <AuthProvider>
-        <Router>
-          <App />
-        </Router>
-      </AuthProvider>
-    </Provider>
+    {/* <Provider store={store}> */}
+    <AuthProvider>
+      <Router>
+        <App />
+      </Router>
+    </AuthProvider>
+    {/* </Provider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
