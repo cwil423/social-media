@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import './App.css';
 import Auth from './Containers/Auth/Auth';
-import Login from './Containers/Auth/LoginAndSignUp/Login';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './Containers/HomePage/HomePage';
 import CreatePost from './Containers/CreatePost/CreatePost';

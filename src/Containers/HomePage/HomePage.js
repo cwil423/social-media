@@ -10,7 +10,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([])
 
 
-
+  // Need to change to avoid rerender on each post.
   useEffect(() => {
     fb.firestore().collection('posts').get()
       .then(querySnapshot => {
@@ -18,8 +18,6 @@ const HomePage = () => {
           setPosts((prevPosts => prevPosts.concat(doc.data())))
         })
       });
-
-
   }, []);
   console.log('[Homepage] render')
   return (

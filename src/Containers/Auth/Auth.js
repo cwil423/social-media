@@ -37,6 +37,8 @@ const Auth = (props) => {
         alert(error)
       })
     setSignIn(true)
+
+
   };
 
   const signInHandler = () => {
@@ -62,7 +64,7 @@ const Auth = (props) => {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         placeholder={'Password'} />
-      {/* {signIn === false ? <input value={name} onChange={(event) => setName(event.target.value)} placeholder={'Name'} /> : null} */}
+      {/* {signIn === false ? <input value={name} onChange={(event) => setName(event.target.value)} placeholder={'Full Name'} /> : null} */}
       {signButton}
       <p>{signIn === false ? 'Already a user?' : 'New user? Create an account below'}</p>
       <button onClick={() => setSignIn(!signIn)}>{signIn === false ? 'Sign In' : 'Sign Up'}</button>
