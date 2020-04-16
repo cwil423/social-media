@@ -37,6 +37,7 @@ const Auth = (props) => {
         alert(error)
       })
     setSignIn(true)
+    setTimeout(() => alert('Please go to the Profile page and set up your username and photo.'), 2000)
 
 
   };

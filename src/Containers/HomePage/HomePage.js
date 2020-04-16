@@ -12,7 +12,7 @@ const HomePage = () => {
 
   // Need to change to avoid rerender on each post.
   useEffect(() => {
-    fb.firestore().collection('posts').get()
+    fb.firestore().collection('posts').orderBy('date', 'desc').get()
       .then(querySnapshot => {
         querySnapshot.forEach((doc) => {
           setPosts((prevPosts => prevPosts.concat(doc.data())))
