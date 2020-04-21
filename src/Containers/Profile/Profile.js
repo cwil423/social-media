@@ -1,27 +1,30 @@
 import React, { useContext, useReducer, useState, forceUpdate } from 'react';
 import { fb } from '../../Firebase/firebase';
 import { authContext } from '../../Context/authContext';
-import Navbar from '../../Components/Navigation/Navbar';
+import Navbar from '../../Components/Navigation/Navbar/Navbar';
 import classes from './Profile.module.css';
-import ProfileEditor from './ProfileEditor/ProfileEditor';
+import PhotoEditor from './PhotoEditor/PhotoEditor';
+import NameEditor from './NameEditor/NameEditor';
+import Button from '../../Components/UI/Button/Button';
+import ProfileEditor from './ProfileEditor';
 
 const Profile = (props) => {
-  const [loggedIn] = useContext(authContext)
-  const [editingProfile, setEditingProfile] = useState(false)
-  const [userName, setUserName] = useState('')
+  const [loggedIn] = useContext(authContext);
+  const [editingName, setEditingName] = useState(false);
+  const [editingPhoto, setEditingPhoto] = useState(false);
 
   const submitNameHandler = (userName) => {
     fb.auth().currentUser.updateProfile({
       displayName: userName
     });
-    setTimeout(() => { setEditingProfile(!editingProfile) }, 800);
+    setTimeout(() => { setEditingName(!editingName) }, 800);
   }
 
   const submitPhotoHandler = (photo) => {
     fb.auth().currentUser.updateProfile({
       photoURL: photo
     });
-    setTimeout(() => { setEditingProfile(!editingProfile) }, 800);
+    setTimeout(() => { setEditingPhoto(!editingPhoto) }, 800);
   }
 
   let displayName = null
@@ -35,7 +38,6 @@ const Profile = (props) => {
 
   let userPhoto = null
   if (loggedIn.user != null) {
-    console.log(loggedIn.user.photoURL)
     if (loggedIn.user.photoURL === null) {
       userPhoto = <h1>Please select a user photo!</h1>
     } else {
@@ -48,15 +50,22 @@ const Profile = (props) => {
   return (
     <div className={classes.profile}>
       <Navbar />
-      <p>User Name: </p>
       <h1>{displayName}</h1>
-      <p>User Photo:</p>
+      {editingName ? <NameEditor submitName={(name) => submitNameHandler(name)} /> : null}
+      <Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
       {userPhoto}
-      {editingProfile ? <ProfileEditor submitName={(userName) => submitNameHandler(userName)} submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
-      <button onClick={() => setEditingProfile(!editingProfile)}>Update Account</button>
+      {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
+      <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
     </div>
 
   );
 }
 
 export default Profile;
+
+{/* <h1>{displayName}</h1>
+{editingName ? <NameEditor submitName={(userName) => submitNameHandler(userName)} /> : null}
+<Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
+{userPhoto}
+{editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
+<Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button> */}

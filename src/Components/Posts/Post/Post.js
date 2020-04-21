@@ -4,7 +4,6 @@ import { authContext } from '../../../Context/authContext';
 
 const Post = (props) => {
   const date = props.info.date.toDate()
-  console.log(date)
   return (
     <div className={classes.post}>
       <h2 >{props.info.post}</h2>

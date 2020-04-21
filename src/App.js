@@ -4,24 +4,12 @@ import Auth from './Containers/Auth/Auth';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './Containers/HomePage/HomePage';
 import CreatePost from './Containers/CreatePost/CreatePost';
-import { fb } from './Firebase/firebase';
-import { authContext } from './Context/authContext';
 import ProtectedRoute from './Components/Navigation/ProtectedRoute';
 import Profile from './Containers/Profile/Profile';
-import { useDispatch } from 'react-redux';
+import Navbar from './Components/Navigation/Navbar/Navbar';
 
 
 function App() {
-
-  // fb.auth().onAuthStateChanged(user => {
-  //   if (user) {
-  //     console.log(user)
-  //     dispatch();
-  //   } else {
-  //     setLoggedIn(false);
-  //   };
-  // });
-
   return (
     <div className="App">
       <Switch>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { fb } from '../../Firebase/firebase';
+import { fb } from '../../../Firebase/firebase';
 import classes from './Navbar.module.css';
 
 const signOutHandler = () => {
