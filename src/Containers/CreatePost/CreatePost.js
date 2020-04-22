@@ -7,12 +7,12 @@ import { authContext } from '../../Context/authContext';
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
 
-const CreatePost = () => {
+const CreatePost = (props) => {
   const [postContent, setPostContent] = useState('')
   const [loggedIn] = useContext(authContext);
   let history = useHistory()
 
-  const submitPostHandler = (post, user, photo) => {
+  const submitPostHandler = (post, user, photo, uid) => {
     let date = new Date();
     let ampm = 'AM'
     let dd = String(date.getDate()).padStart(2, '0');
@@ -28,8 +28,12 @@ const CreatePost = () => {
       minutes = '0' + minutes
     }
     let time = hours + ':' + minutes + ' ' + ampm + ' ' + mm + '/' + dd + '/' + yyyy;
-    let content = { post, user, date, time, photo }
+    let postId = Math.random()
+    let content = { post, user, date, time, photo, uid, postId }
+    // props.postSubmited(content)
     fb.firestore().collection('posts').add(content)
+    history.push('./home_page')
+
   }
 
   console.log('[Create Post] render')
@@ -40,7 +44,7 @@ const CreatePost = () => {
         value={postContent}
         onChange={event => setPostContent(event.target.value)}
         placeholder='Content' />
-      <Button onClick={() => submitPostHandler(postContent, loggedIn.user.displayName, loggedIn.user.photoURL)}>
+      <Button onClick={() => submitPostHandler(postContent, loggedIn.user.displayName, loggedIn.user.photoURL, loggedIn.user.uid)}>
         Submit
       </Button>
     </div>

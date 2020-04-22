@@ -11,3 +11,8 @@
   border-radius: 50%;
   margin: auto;
 }
+
+.delete {
+  margin-left: 90%;
+  border: none;
+}

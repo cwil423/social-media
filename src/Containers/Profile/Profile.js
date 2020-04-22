@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, forceUpdate } from 'react';
+import React, { useContext, useState } from 'react';
 import { fb } from '../../Firebase/firebase';
 import { authContext } from '../../Context/authContext';
 import Navbar from '../../Components/Navigation/Navbar/Navbar';
@@ -6,12 +6,13 @@ import classes from './Profile.module.css';
 import PhotoEditor from './PhotoEditor/PhotoEditor';
 import NameEditor from './NameEditor/NameEditor';
 import Button from '../../Components/UI/Button/Button';
-import ProfileEditor from './ProfileEditor';
+import Posts from '../../Components/Posts/Posts';
 
 const Profile = (props) => {
   const [loggedIn] = useContext(authContext);
   const [editingName, setEditingName] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(false);
+  const [posts, setPosts] = useState([])
 
   const submitNameHandler = (userName) => {
     fb.auth().currentUser.updateProfile({
@@ -25,6 +26,23 @@ const Profile = (props) => {
       photoURL: photo
     });
     setTimeout(() => { setEditingPhoto(!editingPhoto) }, 800);
+  }
+
+  const onDeleteHandler = (postId) => {
+    fb.firestore().collection('posts').doc(postId).delete()
+      .then(() => {
+        let fetchedPosts = [];
+        fb.firestore().collection('posts').where('uid', '==', loggedIn.user.uid).orderBy('date', 'desc').get()
+          .then(querySnapshot => {
+            querySnapshot.forEach((doc) => {
+              let postContent = doc.data()
+              postContent.postId = doc.id
+              fetchedPosts.push(postContent)
+            })
+            setPosts(fetchedPosts)
+          });
+      })
+
   }
 
   let displayName = null
@@ -46,6 +64,19 @@ const Profile = (props) => {
 
   }
 
+  if (loggedIn.user != null && posts.length < 1) {
+    let fetchedPosts = [];
+    fb.firestore().collection('posts').where('uid', '==', loggedIn.user.uid).orderBy('date', 'desc').get()
+      .then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          let postContent = doc.data()
+          postContent.postId = doc.id
+          fetchedPosts.push(postContent)
+        })
+        setPosts(fetchedPosts)
+      });
+  }
+
   console.log('[Profile] render')
   return (
     <div className={classes.profile}>
@@ -56,6 +87,9 @@ const Profile = (props) => {
       {userPhoto}
       {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
       <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
+      <div className={classes.posts}>
+        <Posts posts={posts} deletable={true} delete={(postId) => onDeleteHandler(postId)} />
+      </div>
     </div>
 
   );

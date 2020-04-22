@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import './App.css';
 import Auth from './Containers/Auth/Auth';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -6,8 +6,6 @@ import HomePage from './Containers/HomePage/HomePage';
 import CreatePost from './Containers/CreatePost/CreatePost';
 import ProtectedRoute from './Components/Navigation/ProtectedRoute';
 import Profile from './Containers/Profile/Profile';
-import Navbar from './Components/Navigation/Navbar/Navbar';
-
 
 function App() {
   return (

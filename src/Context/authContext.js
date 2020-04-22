@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import { fb } from '../Firebase/firebase';
 
 export const authContext = createContext();
