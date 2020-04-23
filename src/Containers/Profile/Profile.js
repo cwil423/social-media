@@ -12,7 +12,7 @@ const Profile = (props) => {
   const [loggedIn] = useContext(authContext);
   const [editingName, setEditingName] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(false);
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState(null)
 
   const submitNameHandler = (userName) => {
     fb.auth().currentUser.updateProfile({
@@ -64,7 +64,7 @@ const Profile = (props) => {
 
   }
 
-  if (loggedIn.user != null && posts.length < 1) {
+  if (loggedIn.user != null && posts === null) {
     let fetchedPosts = [];
     fb.firestore().collection('posts').where('uid', '==', loggedIn.user.uid).orderBy('date', 'desc').get()
       .then(querySnapshot => {
@@ -73,10 +73,20 @@ const Profile = (props) => {
           postContent.postId = doc.id
           fetchedPosts.push(postContent)
         })
+        console.log(fetchedPosts)
         setPosts(fetchedPosts)
+
       });
   }
 
+  let displayedPosts = null
+  if (posts != null) {
+    displayedPosts = (
+      <Posts posts={posts} deletable={true} delete={(postId) => onDeleteHandler(postId)} />
+    )
+  }
+
+  console.log(posts)
   console.log('[Profile] render')
   return (
     <div className={classes.profile}>
@@ -88,7 +98,7 @@ const Profile = (props) => {
       {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
       <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
       <div className={classes.posts}>
-        <Posts posts={posts} deletable={true} delete={(postId) => onDeleteHandler(postId)} />
+        {displayedPosts}
       </div>
     </div>
 
@@ -96,10 +106,3 @@ const Profile = (props) => {
 }
 
 export default Profile;
-
-{/* <h1>{displayName}</h1>
-{editingName ? <NameEditor submitName={(userName) => submitNameHandler(userName)} /> : null}
-<Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
-{userPhoto}
-{editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
-<Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button> */}

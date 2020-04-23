@@ -19,10 +19,6 @@ const HomePage = () => {
       });
   }, []);
 
-  // const newPostHandler = (post) => {
-  //   setPosts(posts.concat(post))
-  // }
-
   console.log('[Homepage] render')
   return (
     <div className={classes.homepage}>
