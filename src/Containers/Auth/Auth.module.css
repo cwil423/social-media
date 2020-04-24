@@ -1,13 +1,29 @@
 .auth {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   width: 60%;
   margin: auto;
-  padding: 10px;
-  background-color: lightgray;
+  padding: 10px 10px 24px 10px;
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  
 }
 
 .title {
   background-color: orange;
-  border-radius: 25px;
+  border-radius: 8px;
+  padding: 5px;
 }
+
+@media (max-width: 600px) {
+  .auth {
+    width: 100vw;
+  }
+} 

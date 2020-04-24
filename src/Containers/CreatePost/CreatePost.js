@@ -40,13 +40,16 @@ const CreatePost = (props) => {
   return (
     <div className={classes.createPost}>
       <Navbar />
-      <Input
-        value={postContent}
-        onChange={event => setPostContent(event.target.value)}
-        placeholder='Content' />
-      <Button onClick={() => submitPostHandler(postContent, loggedIn.user.displayName, loggedIn.user.photoURL, loggedIn.user.uid)}>
-        Submit
+      <div className={classes.inputs}>
+        <Input
+          value={postContent}
+          onChange={event => setPostContent(event.target.value)}
+          placeholder='Content' />
+        <Button onClick={() => submitPostHandler(postContent, loggedIn.user.displayName, loggedIn.user.photoURL, loggedIn.user.uid)}>
+          Submit
       </Button>
+      </div>
+
     </div>
   );
 }

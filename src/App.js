@@ -6,6 +6,7 @@ import HomePage from './Containers/HomePage/HomePage';
 import CreatePost from './Containers/CreatePost/CreatePost';
 import ProtectedRoute from './Components/Navigation/ProtectedRoute';
 import Profile from './Containers/Profile/Profile';
+import Navbar from './Components/Navigation/Navbar/Navbar';
 
 function App() {
   return (

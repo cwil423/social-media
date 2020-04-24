@@ -4,4 +4,18 @@
   width: 60%;
   margin: auto;
   background-color: white;
+  
+  
 }
+
+.inputs {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 40px ;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .createPost {
+    width: 100%;
+  }
+} 

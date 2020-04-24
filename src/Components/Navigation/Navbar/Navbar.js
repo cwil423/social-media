@@ -10,22 +10,22 @@ const signOutHandler = () => {
 const Navbar = () => {
   return (
     <div className={classes.navbar}>
-      <h1>FriendBook</h1>
+      <h1 className={classes.title}>FriendBook</h1>
       <ul className={classes.navLinks}>
-        <NavLink to='/home_page'>
+        <NavLink className={classes.navLink} to='/home_page'>
           Home
         </NavLink>
-        <NavLink to='/create_post'>
+        <NavLink className={classes.navLink} to='/create_post'>
           Create Post
         </NavLink>
-        <NavLink to='profile'>
+        <NavLink className={classes.navLink} to='profile'>
           Profile
         </NavLink>
-        <NavLink to='/login' onClick={signOutHandler}>
+        <NavLink className={classes.navLink} to='/login' onClick={signOutHandler}>
           Sign Out
         </NavLink>
-
       </ul>
+      <hr />
     </div>
   );
 }

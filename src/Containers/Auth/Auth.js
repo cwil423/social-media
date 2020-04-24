@@ -62,9 +62,10 @@ const Auth = (props) => {
       <Input
         value={password}
         onChange={(event) => setPassword(event.target.value)}
-        placeholder={'Password'} />
+        placeholder={'Password'}
+        type={'password'} />
       {signButton}
-      <p>{signIn === false ? 'Already a user?' : 'New user? Create an account below'}</p>
+      <p>{signIn === false ? 'Already a user?' : 'New user? Create an account below.'}</p>
       <Button onClick={() => setSignIn(!signIn)}>{signIn === false ? 'Sign In' : 'Sign Up'}</Button>
     </div>
   );

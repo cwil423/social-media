@@ -1,8 +1,14 @@
 .navbar {
-  background-color: orange;
+  color: orange;
+  background-color: white;
+  padding-bottom: 50px;
 }
 
 .navLinks {
   display: flex;
   justify-content: space-around;
+}
+
+.navLink {
+  text-decoration: none;
 }

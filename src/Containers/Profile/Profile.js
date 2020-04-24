@@ -91,12 +91,15 @@ const Profile = (props) => {
   return (
     <div className={classes.profile}>
       <Navbar />
-      <h1>{displayName}</h1>
-      {editingName ? <NameEditor submitName={(name) => submitNameHandler(name)} /> : null}
-      <Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
-      {userPhoto}
-      {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
-      <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
+      <div className={classes.profileSection}>
+        <h1>{displayName}</h1>
+        {editingName ? <NameEditor submitName={(name) => submitNameHandler(name)} /> : null}
+        <Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
+        {userPhoto}
+        {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
+        <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
+      </div>
+
       <div className={classes.posts}>
         {displayedPosts}
       </div>
