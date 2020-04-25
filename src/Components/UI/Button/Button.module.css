@@ -7,3 +7,9 @@
   outline: none;
   cursor: pointer;
 }
+
+@media (max-width: 1200px) {
+  .button {
+    width: 30%;
+  }
+}

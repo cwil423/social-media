@@ -1,8 +1,8 @@
 .auth {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -40%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,11 +19,11 @@
 .title {
   background-color: orange;
   border-radius: 8px;
-  padding: 5px;
+  padding: 4px;
 }
 
 @media (max-width: 600px) {
   .auth {
-    width: 100vw;
+    width: 100%;
   }
 } 

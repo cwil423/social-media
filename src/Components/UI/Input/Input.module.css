@@ -1,14 +1,16 @@
 .input {
   margin: 10px auto 10px auto;
-  width: 350px;
+  width: 60%;
   padding: 10px;
   border-radius: 10px;
   border-style: groove;
   outline: none;
 }
 
-@media (max-width: 650px) {
+
+@media (max-width: 700px) {
   .input {
-    width: 250px;
+    width: 70%;
   }
 }
+

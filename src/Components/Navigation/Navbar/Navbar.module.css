@@ -2,6 +2,7 @@
   color: orange;
   background-color: white;
   padding-bottom: 50px;
+  font-size: large;
 }
 
 .navLinks {
@@ -11,4 +12,10 @@
 
 .navLink {
   text-decoration: none;
+  color: navy;
+  margin-right: 35px;
+}
+
+.isActive {
+  color: orange;
 }
