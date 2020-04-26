@@ -73,7 +73,6 @@ const Profile = (props) => {
           postContent.postId = doc.id
           fetchedPosts.push(postContent)
         })
-        console.log(fetchedPosts)
         setPosts(fetchedPosts)
 
       });
@@ -82,28 +81,34 @@ const Profile = (props) => {
   let displayedPosts = null
   if (posts != null) {
     displayedPosts = (
-      <Posts posts={posts} deletable={true} delete={(postId) => onDeleteHandler(postId)} />
+      <Posts
+        posts={posts}
+        deletable={true}
+        delete={(postId) => onDeleteHandler(postId)}
+      />
     )
   }
 
-  console.log(posts)
   console.log('[Profile] render')
   return (
-    <div className={classes.profile}>
+    <React.Fragment>
       <Navbar />
-      <div className={classes.profileSection}>
-        <h1>{displayName}</h1>
-        {editingName ? <NameEditor submitName={(name) => submitNameHandler(name)} /> : null}
-        <Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
-        {userPhoto}
-        {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
-        <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
-      </div>
+      <div className={classes.profile}>
+        <div className={classes.profileSection}>
+          <h1>{displayName}</h1>
+          {editingName ? <NameEditor submitName={(name) => submitNameHandler(name)} /> : null}
+          <Button onClick={() => setEditingName(!editingName)}>Update Name</Button>
+          {userPhoto}
+          {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
+          <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
+        </div>
 
-      <div className={classes.posts}>
-        {displayedPosts}
+        <div className={classes.posts}>
+          {displayedPosts}
+        </div>
       </div>
-    </div>
+    </React.Fragment>
+
 
   );
 }

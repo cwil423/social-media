@@ -4,9 +4,15 @@ import Navbar from '../../Components/Navigation/Navbar/Navbar';
 import classes from './HomePage.module.css';
 import { fb } from '../../Firebase/firebase';
 import CreatePost from '../CreatePost/CreatePost';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const HomePage = () => {
   const [posts, setPosts] = useState([])
+  const dispatch = useDispatch()
+
+  let history = useHistory()
+
 
   useEffect(() => {
     let fetchedPosts = [];
@@ -19,13 +25,23 @@ const HomePage = () => {
       });
   }, []);
 
+  const onClickHandler = (uid, photo, user) => {
+    dispatch({ type: 'postClicked', uid: uid, photo: photo, user: user });
+    history.push('/user')
+  }
+
   console.log('[Homepage] render')
   return (
-    <div className={classes.homepage}>
-      {/* <CreatePost postSubmited={(post) => newPostHandler(post)} /> */}
+    <React.Fragment>
       <Navbar />
-      <Posts posts={posts} />
-    </div>
+      <div className={classes.homepage}>
+        <Posts
+          posts={posts}
+          clickable={true}
+          clicked={(uid, photo, user) => onClickHandler(uid, photo, user)} />
+      </div>
+    </React.Fragment>
+
   );
 }
 

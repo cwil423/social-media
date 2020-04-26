@@ -1,11 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Navigation/Navbar/Navbar';
+import { useSelector } from 'react-redux';
+import { fb } from '../../Firebase/firebase';
+import Posts from '../Posts/Posts';
+import classes from './OtherProfile.module.css';
+import { useHistory } from 'react-router-dom';
 
 const OtherProfile = () => {
-  return (
-    <div>
+  const [posts, setPosts] = useState(null)
+  const [noUserMessage, setNoUserMessage] = useState('No profile selected.')
 
-    </div>
+  const user = useSelector(state => state)
+
+  let history = useHistory()
+  let fetchedPosts = [];
+
+  useEffect(() => {
+    if (user != null && posts === null)
+      fb.firestore().collection('posts').where('uid', '==', user.selectedUser).orderBy('date', 'desc').get()
+        .then(querySnapshot => {
+          querySnapshot.forEach((doc) => {
+            let postContent = doc.data()
+            postContent.postId = doc.id
+            fetchedPosts.push(postContent)
+          })
+          setPosts(fetchedPosts)
+          setNoUserMessage(true)
+        });
+  });
+
+
+  let userName = null
+  if (user != null) {
+    userName = <h1>{user.selectedUserName}</h1>
+  }
+
+  let userPhoto = null
+  if (user != null) {
+    userPhoto = <img className={classes.userPhoto} src={user.selectedUserPhoto} alt='Please select a user photo' />
+  }
+
+  let displayedPosts = null
+  if (posts != null) {
+    displayedPosts = (
+      <Posts
+        posts={posts}
+      />
+    )
+  }
+
+
+  return (
+    <React.Fragment>
+      <Navbar />
+      <div className={classes.profile}>
+        <div className={classes.profileSection}>
+          {userName}
+          {userPhoto}
+          {noUserMessage}
+        </div>
+        <div className={classes.posts}>
+          {displayedPosts}
+        </div>
+      </div>
+    </React.Fragment>
+
   );
 }
 

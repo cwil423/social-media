@@ -7,10 +7,12 @@ import CreatePost from './Containers/CreatePost/CreatePost';
 import ProtectedRoute from './Components/Navigation/ProtectedRoute';
 import Profile from './Containers/Profile/Profile';
 import Navbar from './Components/Navigation/Navbar/Navbar';
+import OtherProfile from './Components/OtherProfile/OtherProfile';
 
 function App() {
   return (
     <div className="App">
+      {/* <Navbar /> */}
       <Switch>
         <Route exact path='/'>
           <Redirect to='/login' />
@@ -19,6 +21,7 @@ function App() {
         <ProtectedRoute path={'/create_post'} component={CreatePost} />
         <ProtectedRoute path={'/home_page'} component={HomePage} />
         <ProtectedRoute path={'/profile'} component={Profile} />
+        <ProtectedRoute path={'/user'} component={OtherProfile} />
       </Switch>
     </div>
   );

@@ -8,12 +8,12 @@
 .navLinks {
   display: flex;
   justify-content: space-around;
+  padding: 0;
 }
 
 .navLink {
   text-decoration: none;
   color: navy;
-  margin-right: 35px;
 }
 
 .isActive {

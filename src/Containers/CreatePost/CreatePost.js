@@ -38,19 +38,22 @@ const CreatePost = (props) => {
 
   console.log('[Create Post] render')
   return (
-    <div className={classes.createPost}>
+    <React.Fragment>
       <Navbar />
-      <div className={classes.inputs}>
-        <Input
-          value={postContent}
-          onChange={event => setPostContent(event.target.value)}
-          placeholder='Content' />
-        <Button onClick={() => submitPostHandler(postContent, loggedIn.user.displayName, loggedIn.user.photoURL, loggedIn.user.uid)}>
-          Submit
+      <div className={classes.createPost}>
+        <div className={classes.inputs}>
+          <Input
+            value={postContent}
+            onChange={event => setPostContent(event.target.value)}
+            placeholder='Content' />
+          <Button onClick={() => submitPostHandler(postContent, loggedIn.user.displayName, loggedIn.user.photoURL, loggedIn.user.uid)}>
+            Submit
       </Button>
-      </div>
+        </div>
 
-    </div>
+      </div>
+    </React.Fragment>
+
   );
 }
 
