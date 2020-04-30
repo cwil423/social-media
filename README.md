@@ -1,2 +1,2 @@
-A social media website.
+A social media website created with React, Redux and Firebase.
 
