@@ -13,6 +13,7 @@ const Auth = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [signIn, setSignIn] = useState(true)
+  const [errorMessage, setErrorMessage] = useState()
   const [loggedIn] = useContext(authContext);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Auth = (props) => {
         })
       })
       .catch((error) => {
-        alert(error)
+        setErrorMessage(error.message)
       })
     setSignIn(true)
     setTimeout(() => alert('Please go to the Profile page and set up your username and photo.'), 2000)
@@ -43,7 +44,7 @@ const Auth = (props) => {
   const signInHandler = () => {
     fb.auth().signInWithEmailAndPassword(email, password)
       .catch((error => {
-        alert(error)
+        setErrorMessage(error.message)
       }));
 
   };
@@ -51,6 +52,10 @@ const Auth = (props) => {
   let signButton = null
   signIn ? signButton = <Button onClick={signInHandler}>Sign In</Button> : signButton = <Button onClick={signUpHandler}>Sign Up</Button>
 
+  let errorMessagePlace = null
+  if (errorMessage != null) {
+    errorMessagePlace = <p className={classes.error}>{errorMessage}</p>
+  }
   console.log('[Auth] render')
   return (
     <div className={classes.auth}>
@@ -65,6 +70,7 @@ const Auth = (props) => {
         placeholder={'Password'}
         type={'password'} />
       {signButton}
+      {errorMessagePlace}
       <p>{signIn === false ? 'Already a user?' : 'New user? Create an account below.'}</p>
       <Button onClick={() => setSignIn(!signIn)}>{signIn === false ? 'Sign In' : 'Sign Up'}</Button>
     </div>

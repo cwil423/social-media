@@ -1,19 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Navbar from '../Navigation/Navbar/Navbar';
 import { useSelector } from 'react-redux';
 import { fb } from '../../Firebase/firebase';
 import Posts from '../Posts/Posts';
 import classes from './OtherProfile.module.css';
 import { useHistory } from 'react-router-dom';
+import {authContext} from '../../Context/authContext';
 
 const OtherProfile = () => {
   const [posts, setPosts] = useState(null)
-  const [noUserMessage, setNoUserMessage] = useState('No profile selected.')
+  const [noUserMessage, setNoUserMessage] = useState()
+  const [loggedIn] = useContext(authContext)
 
   const user = useSelector(state => state)
 
   let history = useHistory()
   let fetchedPosts = [];
+
+  useEffect(() => {
+    if (user != null) {
+      if (loggedIn.user.uid === user.selectedUser) {
+        history.push('/profile')
+      }
+    }
+  })
+
+  useEffect(() => {
+    if (loggedIn != null) {
+      if (user == null) {
+        setNoUserMessage('No user selected')
+      }
+    }
+  });
 
   useEffect(() => {
     if (user != null && posts === null)

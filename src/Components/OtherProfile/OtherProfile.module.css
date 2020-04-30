@@ -10,11 +10,11 @@
 .profileSection {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 40%;
   margin: auto ;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 40px ;
+  padding: 40px 16px 75px 16px ;
   margin-bottom: 100px;
   border-radius: 8px;
   
