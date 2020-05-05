@@ -21,3 +21,9 @@
 .isActive {
   color: orange;
 }
+
+@media (max-width: 600px) {
+  .navLinks {
+    font-size: large;
+  }
+} 
