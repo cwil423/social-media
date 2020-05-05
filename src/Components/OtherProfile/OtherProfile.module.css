@@ -10,7 +10,7 @@
 .profileSection {
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 400px;
   margin: auto ;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -36,8 +36,23 @@
   background-color: white;
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .profile {
     width: 100%;
+  }
+}  */
+
+@media (max-width: 600px) {
+  .profile {
+    width: 400px;
+  }
+  .profileSection {
+    width: 275px;
+  }
+} 
+
+@media (min-width: 1600px) {
+  .profile {
+    width: 1000px;
   }
 } 
