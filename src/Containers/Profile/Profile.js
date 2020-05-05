@@ -7,12 +7,14 @@ import PhotoEditor from './PhotoEditor/PhotoEditor';
 import NameEditor from './NameEditor/NameEditor';
 import Button from '../../Components/UI/Button/Button';
 import Posts from '../../Components/Posts/Posts';
+import Spinner from '../../Components/UI/Spinner/Spinner';
 
 const Profile = (props) => {
   const [loggedIn] = useContext(authContext);
   const [editingName, setEditingName] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(false);
   const [posts, setPosts] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const submitNameHandler = (userName) => {
     fb.auth().currentUser.updateProfile({
@@ -74,6 +76,7 @@ const Profile = (props) => {
           fetchedPosts.push(postContent)
         })
         setPosts(fetchedPosts)
+        setLoading(false)
 
       });
   }
@@ -89,10 +92,9 @@ const Profile = (props) => {
     )
   }
 
-  console.log('[Profile] render')
-  return (
-    <React.Fragment>
-      <Navbar />
+  let page = <Spinner />
+  if (loading === false) {
+    page = (
       <div className={classes.profile}>
         <div className={classes.profileSection}>
           <h1>{displayName}</h1>
@@ -102,11 +104,18 @@ const Profile = (props) => {
           {editingPhoto ? <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} /> : null}
           <Button onClick={() => setEditingPhoto(!editingPhoto)}>Update Photo</Button>
         </div>
-
         <div className={classes.posts}>
           {displayedPosts}
         </div>
       </div>
+    )
+  }
+
+  console.log('[Profile] render')
+  return (
+    <React.Fragment>
+      <Navbar />
+      {page}
     </React.Fragment>
 
 

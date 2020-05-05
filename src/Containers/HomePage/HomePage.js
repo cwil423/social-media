@@ -6,12 +6,14 @@ import { fb } from '../../Firebase/firebase';
 import CreatePost from '../CreatePost/CreatePost';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Spinner from '../../Components/UI/Spinner/Spinner';
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([])
-  const dispatch = useDispatch()
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  let history = useHistory()
+  let history = useHistory();
 
 
   useEffect(() => {
@@ -20,8 +22,9 @@ const HomePage = () => {
       .then(querySnapshot => {
         querySnapshot.forEach((doc) => {
           fetchedPosts.push(doc.data())
-        })
-        setPosts(fetchedPosts)
+        });
+        setPosts(fetchedPosts);
+        setLoading(false);
       });
   }, []);
 
@@ -30,10 +33,15 @@ const HomePage = () => {
     history.push('/user')
   }
 
+  let spinner = <Spinner />
+  if (loading === false) {
+    spinner = null
+  }
   console.log('[Homepage] render')
   return (
     <React.Fragment>
       <Navbar />
+      {spinner}
       <div className={classes.homepage}>
         <Posts
           posts={posts}
