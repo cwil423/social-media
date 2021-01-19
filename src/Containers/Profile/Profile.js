@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { fb } from '../../Firebase/firebase';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { authContext } from '../../Context/authContext';
 import Navbar from '../../Components/Navigation/Navbar/Navbar';
 import SideMenu from '../../Components/Navigation/SideMenu';
@@ -10,20 +10,15 @@ import NameEditor from './NameEditor/NameEditor';
 import Posts from '../../Components/Posts/Posts';
 import Spinner from '../../Components/UI/Spinner/Spinner';
 import PageHeader from '../../Components/Navigation/pageHeader';
+import Modal from '../../Components/UI/Modal/Modal';
 
 const Profile = (props) => {
   const [loggedIn] = useContext(authContext);
-  const [editingName, setEditingName] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(false);
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // const submitNameHandler = (userName) => {
-  //   fb.auth().currentUser.updateProfile({
-  //     displayName: userName
-  //   });
-  //   setTimeout(() => { setEditingName(!editingName) }, 800);
-  // }
+  const [modalOpen, setModalOpen] = useState(false);
+  const [photo, setPhoto] = useState();
 
   const submitPhotoHandler = (photo) => {
     fb.auth().currentUser.updateProfile({
@@ -56,15 +51,6 @@ const Profile = (props) => {
           });
       });
   };
-
-  // let displayName = null
-  // if (loggedIn.user != null) {
-  //   if (loggedIn.user.displayName === null) {
-  //     displayName = 'Please enter a username!'
-  //   } else {
-  //     displayName = loggedIn.user.displayName
-  //   }
-  // }
 
   let userPhoto = null;
   if (loggedIn.user != null) {
@@ -105,7 +91,8 @@ const Profile = (props) => {
       <Posts
         posts={posts}
         deletable={true}
-        delete={(postId) => onDeleteHandler(postId)}
+        onDelete={(postId) => onDeleteHandler(postId)}
+        modal={() => setModalOpen(!modalOpen)}
       />
     );
   }
@@ -116,15 +103,23 @@ const Profile = (props) => {
       <div className={classes.profile}>
         <div className={classes.profileSection}>
           <h1>{loggedIn.user.displayName}</h1>
-          {/* {editingName ? (
-            <NameEditor submitName={(name) => submitNameHandler(name)} />
-          ) : null} */}
-          {/* <Button onClick={() => setEditingName(!editingName)}>
-            Update Name
-          </Button> */}
+
           {userPhoto}
           {editingPhoto ? (
-            <PhotoEditor submitPhoto={(photo) => submitPhotoHandler(photo)} />
+            <div className={classes.photoURL}>
+              <TextField
+                // variant="outlined"
+                placeholder="New photo URL"
+                onChange={(e) => setPhoto(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => submitPhotoHandler(photo)}
+              >
+                Submit
+              </Button>
+            </div>
           ) : null}
           {!editingPhoto ? (
             <div>
@@ -146,9 +141,9 @@ const Profile = (props) => {
   console.log('[Profile] render');
   return (
     <div className={classes.profilePage}>
-      {/* <Navbar /> */}
       <PageHeader title="Profile" />
       <SideMenu />
+      <Modal open={modalOpen} />
       {page}
     </div>
   );

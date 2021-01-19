@@ -30,6 +30,11 @@
   margin-bottom: 25px;
 }
 
+.photoURL {
+  display: flex;
+  align-items: center;
+}
+
 .posts {
   display: flex;
   flex-direction: column;

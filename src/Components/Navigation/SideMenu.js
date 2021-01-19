@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: theme.palette.text.primary,
   },
+  link: {
+    padding: '15px',
+  },
 }));
 
 export default function ClippedDrawer() {
@@ -70,7 +73,7 @@ export default function ClippedDrawer() {
         <div className={classes.drawerContainer}>
           <List>
             <NavLink to={'/home_page'} className={classes.navLinks}>
-              <ListItem button>
+              <ListItem button className={classes.link}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
@@ -79,7 +82,7 @@ export default function ClippedDrawer() {
             </NavLink>
             <Divider />
             <NavLink to={'/profile'} className={classes.navLinks}>
-              <ListItem button>
+              <ListItem button className={classes.link}>
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
@@ -88,7 +91,7 @@ export default function ClippedDrawer() {
             </NavLink>
             <Divider />
             <NavLink to={'/create_post'} className={classes.navLinks}>
-              <ListItem button>
+              <ListItem button className={classes.link}>
                 <ListItemIcon>
                   <AddIcon />
                 </ListItemIcon>
@@ -101,7 +104,7 @@ export default function ClippedDrawer() {
               className={classes.navLinks}
               onClick={signOutHandler}
             >
-              <ListItem button>
+              <ListItem button className={classes.link}>
                 <ListItemIcon>
                   <ExitToAppIcon />
                 </ListItemIcon>

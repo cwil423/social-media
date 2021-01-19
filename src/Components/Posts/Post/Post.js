@@ -1,9 +1,19 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import classes from './Post.module.css';
+import Modal from '../../UI/Modal/Modal';
 
 const Post = (props) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const closeModalHandler = (bool) => {
+    setModalOpen(!modalOpen);
+    if (bool) {
+      props.onDelete(props.info.postId);
+    }
+  };
+
   let classApplied = classes.post;
   if (props.clickable) {
     classApplied = classes.clickablePost;
@@ -19,10 +29,11 @@ const Post = (props) => {
           : null
       }
     >
+      <Modal open={modalOpen} closeModal={closeModalHandler} />
       {props.deletable ? (
         <div className={classes.delete}>
           <Button
-            onClick={() => props.delete(props.info.postId)}
+            onClick={() => setModalOpen(true)}
             variant="contained"
             color="secondary"
           >
