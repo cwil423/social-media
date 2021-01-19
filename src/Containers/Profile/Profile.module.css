@@ -1,23 +1,25 @@
+.profilePage {
+  padding-left: 300px;
+  margin-top: 65px;
+}
+
 .profile {
   display: flex;
   flex-direction: column;
   width: 60%;
-  margin: auto ;
-  background-color: white;
-  
+  margin: auto;
 }
 
 .profileSection {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 60%;
-  margin: auto ;
-  background-color: white;
+  margin: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 40px ;
+  padding: 40px;
   margin-bottom: 100px;
   border-radius: 8px;
-  
 }
 
 .userPhoto {
@@ -25,14 +27,14 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  margin: auto;
+  margin-bottom: 25px;
 }
 
 .posts {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: auto ;
+  margin: auto;
   background-color: white;
 }
 
@@ -46,10 +48,10 @@
   .profile {
     width: 400px;
   }
-} 
+}
 
 @media (min-width: 1600px) {
   .profile {
     width: 1000px;
   }
-} 
+}

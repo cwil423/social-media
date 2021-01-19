@@ -8,16 +8,18 @@ import ProtectedRoute from './Components/Navigation/ProtectedRoute';
 import Profile from './Containers/Profile/Profile';
 import Navbar from './Components/Navigation/Navbar/Navbar';
 import OtherProfile from './Components/OtherProfile/OtherProfile';
+import SignUp from './Containers/Auth/SignUp';
 
 function App() {
   return (
     <div className="App">
       {/* <Navbar /> */}
       <Switch>
-        <Route exact path='/'>
-          <Redirect to='/login' />
+        <Route exact path="/">
+          <Redirect to="/login" />
         </Route>
-        <Route path='/login' component={Auth} />
+        <Route path="/login" component={Auth} />
+        <Route path="/signup" component={SignUp} />
         <ProtectedRoute path={'/create_post'} component={CreatePost} />
         <ProtectedRoute path={'/home_page'} component={HomePage} />
         <ProtectedRoute path={'/profile'} component={Profile} />

@@ -1,23 +1,31 @@
+.createPostPage {
+  padding-left: 300px;
+  margin-top: 65px;
+}
+
 .createPost {
   display: flex;
   flex-direction: column;
   width: 60%;
   margin: auto;
-  background-color: white;
-  
-  
 }
 
 .inputs {
   display: flex;
   flex-direction: column;
-  width: 75%;
-  margin: auto ;
-  background-color: white;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 40px ;
+  padding: 40px;
   margin-bottom: 100px;
   border-radius: 8px;
+  height: 250px;
+}
+
+input {
+  width: 300px;
 }
 
 @media (max-width: 600px) {
@@ -27,5 +35,4 @@
   /* .inputs {
     margin: 10px 10px 10px 10px;
   } */
-  
-} 
+}

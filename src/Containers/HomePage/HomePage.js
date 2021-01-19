@@ -7,6 +7,8 @@ import CreatePost from '../CreatePost/CreatePost';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Spinner from '../../Components/UI/Spinner/Spinner';
+import SideMenu from '../../Components/Navigation/SideMenu';
+import PageHeader from '../../Components/Navigation/pageHeader';
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -15,13 +17,15 @@ const HomePage = () => {
 
   let history = useHistory();
 
-
   useEffect(() => {
     let fetchedPosts = [];
-    fb.firestore().collection('posts').orderBy('date', 'desc').get()
-      .then(querySnapshot => {
+    fb.firestore()
+      .collection('posts')
+      .orderBy('date', 'desc')
+      .get()
+      .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          fetchedPosts.push(doc.data())
+          fetchedPosts.push(doc.data());
         });
         setPosts(fetchedPosts);
         setLoading(false);
@@ -30,27 +34,28 @@ const HomePage = () => {
 
   const onClickHandler = (uid, photo, user) => {
     dispatch({ type: 'postClicked', uid: uid, photo: photo, user: user });
-    history.push('/user')
-  }
+    history.push('/user');
+  };
 
-  let spinner = <Spinner />
+  let spinner = <Spinner />;
   if (loading === false) {
-    spinner = null
+    spinner = null;
   }
-  console.log('[Homepage] render')
+  console.log('[Homepage] render');
   return (
-    <React.Fragment>
-      <Navbar />
-      {spinner}
-      <div className={classes.homepage}>
+    <div className={classes.homepage}>
+      <SideMenu />
+      <PageHeader title="Home Page" />
+      <div className={classes.posts}>
+        {spinner}
         <Posts
           posts={posts}
           clickable={true}
-          clicked={(uid, photo, user) => onClickHandler(uid, photo, user)} />
+          clicked={(uid, photo, user) => onClickHandler(uid, photo, user)}
+        />
       </div>
-    </React.Fragment>
-
+    </div>
   );
-}
+};
 
 export default HomePage;

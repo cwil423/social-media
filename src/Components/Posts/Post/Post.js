@@ -1,25 +1,48 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
+import { Button } from '@material-ui/core';
 import classes from './Post.module.css';
 
 const Post = (props) => {
-  let classApplied = classes.post
+  let classApplied = classes.post;
   if (props.clickable) {
-    classApplied = classes.clickablePost
+    classApplied = classes.clickablePost;
   }
 
-
   return (
-    <div className={classApplied} onClick={props.clickable ? () => props.clicked(props.info.uid, props.info.photo, props.info.user) : null}>
+    <div
+      className={classApplied}
+      onClick={
+        props.clickable
+          ? () =>
+              props.clicked(props.info.uid, props.info.photo, props.info.user)
+          : null
+      }
+    >
+      {props.deletable ? (
+        <div className={classes.delete}>
+          <Button
+            onClick={() => props.delete(props.info.postId)}
+            variant="contained"
+            color="secondary"
+          >
+            X
+          </Button>
+        </div>
+      ) : null}
 
-      {props.deletable ? <button onClick={() => props.delete(props.info.postId)} className={classes.delete}>X</button> : null}
-      <h2 >{props.info.post}</h2>
-      <img className={classes.userPhoto} src={props.info.photo} alt='new' />
-      <h2>-{props.info.user}</h2>
-      <h3>{props.info.time}</h3>
-
+      <div className={classes.info}>
+        <div>
+          <img className={classes.userPhoto} src={props.info.photo} alt="new" />
+        </div>
+        <div className={classes.topSection}>
+          <Typography variant="h6">{props.info.user}</Typography>
+          <Typography variant="h6">{props.info.time}</Typography>
+        </div>
+      </div>
+      <Typography variant="body1">{props.info.post}</Typography>
     </div>
-
   );
-}
+};
 
 export default Post;

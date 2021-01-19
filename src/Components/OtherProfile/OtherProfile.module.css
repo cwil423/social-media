@@ -1,23 +1,30 @@
+.otherProfile {
+  padding-left: 300px;
+  padding-top: 65px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  background-color: white;
+}
+
 .profile {
   display: flex;
   flex-direction: column;
   width: 60%;
-  margin: auto ;
+  margin: auto;
   background-color: white;
-  
 }
 
 .profileSection {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 400px;
-  margin: auto ;
-  background-color: white;
+  margin: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 40px 16px 75px 16px ;
+  padding: 40px 16px 75px 16px;
   margin-bottom: 100px;
   border-radius: 8px;
-  
 }
 
 .userPhoto {
@@ -32,11 +39,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: auto ;
+  margin: auto;
   background-color: white;
 }
-
-
 
 @media (max-width: 600px) {
   .profile {
@@ -45,10 +50,10 @@
   .profileSection {
     width: 275px;
   }
-} 
+}
 
 @media (min-width: 1600px) {
   .profile {
     width: 1000px;
   }
-} 
+}

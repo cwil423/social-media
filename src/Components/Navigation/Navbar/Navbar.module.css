@@ -1,9 +1,9 @@
 .navbar {
-  color: orange;
+  color: white;
   /* padding-bottom: 50px; */
   margin-bottom: 50px;
   font-size: large;
-  background-color: white;
+  background-color: #3f51b5;
 }
 
 .navLinks {
@@ -15,15 +15,15 @@
 
 .navLink {
   text-decoration: none;
-  color: navy;
+  color: white;
 }
 
 .isActive {
-  color: orange;
+  color: white;
 }
 
 @media (max-width: 600px) {
   .navLinks {
     font-size: large;
   }
-} 
+}
