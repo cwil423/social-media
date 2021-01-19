@@ -99,7 +99,7 @@ import Input from '../../Components/UI/Input/Input';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -116,6 +116,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
@@ -183,6 +187,7 @@ export default function SignIn() {
           Sign in
         </Typography>
         <Formik
+          validateOnBlur={false}
           initialValues={{
             email: '',
             password: '',
@@ -217,7 +222,7 @@ export default function SignIn() {
                 id="password"
                 autoComplete="current-password"
               />
-              <ErrorMessage name="email" />
+              <ErrorMessage name="password" />
               {errorMessagePlace}
               {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -238,14 +243,14 @@ export default function SignIn() {
                 Forgot password?
               </Link>
             </Grid> */}
-              <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
             </Form>
           )}
         </Formik>
+        <Grid item>
+          <Link href="/signup" variant="body2">
+            {"Don't have an account? Sign Up"}
+          </Link>
+        </Grid>
       </div>
     </Container>
   );

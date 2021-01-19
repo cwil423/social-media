@@ -21,16 +21,26 @@ import Input from '../../Components/UI/Input/Input';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  title: {
+    color: '#3f51b5',
+    // backgroundColor: '#3f51b5',
+    // borderRadius: '8px',
+    padding: theme.spacing(1),
+    margin: theme.spacing(4),
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
@@ -83,6 +93,9 @@ export default function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        <Typography variant="h2" className={classes.title}>
+          FriendBook
+        </Typography>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -90,6 +103,7 @@ export default function SignUp() {
           Sign up
         </Typography>
         <Formik
+          validateOnBlur={false}
           initialValues={{
             email: '',
             password: '',
@@ -167,12 +181,14 @@ export default function SignUp() {
               >
                 Sign Up
               </Button>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
             </Form>
           )}
         </Formik>
+        <Grid item>
+          <Link href="/login" variant="body2">
+            {'Already have an account? Sign in'}
+          </Link>
+        </Grid>
       </div>
     </Container>
   );

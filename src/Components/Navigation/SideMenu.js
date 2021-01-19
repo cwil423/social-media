@@ -1,7 +1,10 @@
 import React from 'react';
+import { fb } from '../../Firebase/firebase';
+import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddIcon from '@material-ui/icons/Add';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,9 +16,6 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 300;
 
@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
+
+  const signOutHandler = () => {
+    fb.auth().signOut();
+  };
 
   return (
     <div className={classes.root}>
@@ -89,6 +93,19 @@ export default function ClippedDrawer() {
                   <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Create Post" />
+              </ListItem>
+            </NavLink>
+            <Divider />
+            <NavLink
+              to={'/login'}
+              className={classes.navLinks}
+              onClick={signOutHandler}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sign Out" />
               </ListItem>
             </NavLink>
           </List>
