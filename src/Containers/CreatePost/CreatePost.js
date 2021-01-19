@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
+import { authContext } from '../../Context/authContext';
 import { Button, TextField } from '@material-ui/core';
 import Navbar from '../../Components/Navigation/Navbar/Navbar';
 import SideMenu from '../../Components/Navigation/SideMenu';
 import classes from './CreatePost.module.css';
 import { fb } from '../../Firebase/firebase';
 import { useHistory } from 'react-router-dom';
-import { authContext } from '../../Context/authContext';
 // import Input from '../../Components/UI/Input/Input';
 import PageHeader from '../../Components/Navigation/pageHeader';
 
@@ -38,7 +38,21 @@ const CreatePost = (props) => {
     history.push('./home_page');
   };
 
-  console.log('[Create Post] render');
+  let userPhoto = null;
+
+  if (loggedIn.user != null) {
+    if (loggedIn.user.photoURL === null) {
+      userPhoto = <h1>Please select a user photo!</h1>;
+    } else {
+      userPhoto = (
+        <img
+          className={classes.userPhoto}
+          src={loggedIn.user.photoURL}
+          alt="Please select a user photo"
+        />
+      );
+    }
+  }
   return (
     <div className={classes.createPostPage}>
       {/* <Navbar /> */}
@@ -46,6 +60,7 @@ const CreatePost = (props) => {
       <PageHeader title="Create Post" />
       <div className={classes.createPost}>
         <div className={classes.inputs}>
+          {userPhoto}
           <div className={classes.input}>
             <TextField
               variant="outlined"

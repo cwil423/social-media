@@ -21,7 +21,15 @@
   padding: 40px;
   margin-bottom: 100px;
   border-radius: 8px;
-  height: 250px;
+  height: 550px;
+}
+
+.userPhoto {
+  vertical-align: middle;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 25px;
 }
 
 input {

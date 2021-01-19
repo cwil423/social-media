@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { fb } from '../../Firebase/firebase';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Card, TextField, Typography } from '@material-ui/core';
 import { authContext } from '../../Context/authContext';
 import Navbar from '../../Components/Navigation/Navbar/Navbar';
 import SideMenu from '../../Components/Navigation/SideMenu';
@@ -85,16 +85,24 @@ const Profile = (props) => {
       });
   }
 
-  let displayedPosts = null;
+  let displayedPosts = (
+    <Card className={classes.placeholder}>
+      <Typography variant="h6">
+        Create posts to see them displayed here!
+      </Typography>
+    </Card>
+  );
   if (posts != null) {
-    displayedPosts = (
-      <Posts
-        posts={posts}
-        deletable={true}
-        onDelete={(postId) => onDeleteHandler(postId)}
-        modal={() => setModalOpen(!modalOpen)}
-      />
-    );
+    if (posts.length > 0) {
+      displayedPosts = (
+        <Posts
+          posts={posts}
+          deletable={true}
+          onDelete={(postId) => onDeleteHandler(postId)}
+          modal={() => setModalOpen(!modalOpen)}
+        />
+      );
+    }
   }
 
   let page = <Spinner />;
