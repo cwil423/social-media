@@ -3,21 +3,23 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding-left: 300px;
 
-  margin-top: 65px;
   background-color: white;
 }
 
 .posts {
-  width: 60%;
+  width: 100%;
   margin: auto;
 }
 
-@media (max-width: 959px) {
+@media (min-width: 959px) {
   .homepage {
-    padding-left: 0px;
-    margin-top: 0px;
+    padding-left: 300px;
+
+    margin-top: 65px;
+  }
+  .posts {
+    width: 650px;
   }
 }
 
