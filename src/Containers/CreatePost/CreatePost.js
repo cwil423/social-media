@@ -55,22 +55,21 @@ const CreatePost = (props) => {
   }
   return (
     <div className={classes.createPostPage}>
-      {/* <Navbar /> */}
+      <Navbar />
       <SideMenu />
       <PageHeader title="Create Post" />
       <div className={classes.createPost}>
         <div className={classes.inputs}>
           {userPhoto}
-          <div className={classes.input}>
-            <TextField
-              variant="outlined"
-              multiline
-              style={{ width: 350 }}
-              value={postContent}
-              onChange={(event) => setPostContent(event.target.value)}
-              placeholder="Content"
-            />
-          </div>
+
+          <TextField
+            variant="outlined"
+            multiline
+            style={{ width: '65%' }}
+            value={postContent}
+            onChange={(event) => setPostContent(event.target.value)}
+            placeholder="Content"
+          />
 
           <div>
             <Button

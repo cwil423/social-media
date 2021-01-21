@@ -14,11 +14,10 @@
   padding: 40px;
   margin-bottom: 16px;
   border-radius: 4px;
-  cursor: pointer;
 }
 
-.clickablePost:hover {
-  background-color: rgba(211, 211, 211, 0.2);
+.info:hover {
+  cursor: pointer;
 }
 
 .userPhoto {
@@ -44,4 +43,16 @@
 
 .topSection {
   padding-left: 20px;
+}
+
+.like {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.liked {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
 }

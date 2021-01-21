@@ -6,7 +6,7 @@
 .profile {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 70%;
   margin: auto;
 }
 
@@ -59,14 +59,9 @@
   }
 }  */
 
-@media (max-width: 600px) {
-  .profile {
-    width: 400px;
-  }
-}
-
-@media (min-width: 1600px) {
-  .profile {
-    width: 1000px;
+@media (max-width: 959px) {
+  .profilePage {
+    padding-left: 0px;
+    margin-top: 0px;
   }
 }

@@ -1,16 +1,21 @@
 .navbar {
+  display: flex;
+  /* flex-direction: column; */
+  padding-left: 10px;
+  align-items: center;
   color: white;
-  /* padding-bottom: 50px; */
-  margin-bottom: 50px;
   font-size: large;
   background-color: #3f51b5;
+  margin-bottom: 25px;
+  padding-top: 25px;
 }
 
 .navLinks {
   display: flex;
   justify-content: space-around;
+  width: 100%;
   padding: 0;
-  font-size: x-large;
+  font-size: large;
 }
 
 .navLink {
@@ -19,11 +24,14 @@
 }
 
 .isActive {
-  color: white;
+  text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 959px) {
   .navLinks {
     font-size: large;
+  }
+  .navbar {
+    display: none;
   }
 }

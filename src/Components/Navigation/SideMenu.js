@@ -2,6 +2,7 @@ import React from 'react';
 import { fb } from '../../Firebase/firebase';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -22,6 +23,9 @@ const drawerWidth = 300;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -47,6 +51,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
+
+  // const media = useMediaQuery('(min-width: 769px)');
 
   const signOutHandler = () => {
     fb.auth().signOut();

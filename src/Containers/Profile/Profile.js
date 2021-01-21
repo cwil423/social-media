@@ -150,6 +150,7 @@ const Profile = (props) => {
   return (
     <div className={classes.profilePage}>
       <PageHeader title="Profile" />
+      <Navbar />
       <SideMenu />
       <Modal open={modalOpen} />
       {page}

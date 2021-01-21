@@ -1,5 +1,11 @@
 import React from 'react';
-import { Card, makeStyles, Paper, Typography } from '@material-ui/core';
+import {
+  Card,
+  makeStyles,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
 
 const PageHeader = ({ icon, title, subtitle, user }) => {
   const classes = useStyles();
+  const media = useMediaQuery('(min-width: 959px)');
 
-  return (
+  return media ? (
     <Paper elevation={0} className={classes.root}>
       <div className={classes.iconAndTitles}>
         {/* <Card className={classes.pageIcon}>{icon}</Card> */}
@@ -50,7 +57,7 @@ const PageHeader = ({ icon, title, subtitle, user }) => {
         </Typography>
       </div>
     </Paper>
-  );
+  ) : null;
 };
 
 export default PageHeader;

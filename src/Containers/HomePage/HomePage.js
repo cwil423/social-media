@@ -45,6 +45,7 @@ const HomePage = () => {
   return (
     <div className={classes.homepage}>
       <SideMenu />
+      <Navbar />
       <PageHeader title="Home Page" />
       <div className={classes.posts}>
         {spinner}

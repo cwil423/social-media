@@ -32,15 +32,9 @@
   margin-bottom: 25px;
 }
 
-input {
-  width: 300px;
-}
-
-@media (max-width: 600px) {
-  .createPost {
-    width: 100%;
+@media (max-width: 959px) {
+  .createPostPage {
+    padding-left: 0px;
+    margin-top: 0px;
   }
-  /* .inputs {
-    margin: 10px 10px 10px 10px;
-  } */
 }
