@@ -36,22 +36,96 @@ const OtherProfile = () => {
   });
 
   useEffect(() => {
-    if (user != null && posts === null)
-      fb.firestore()
-        .collection('posts')
-        .where('uid', '==', user.selectedUser)
-        .orderBy('date', 'desc')
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            let postContent = doc.data();
-            postContent.postId = doc.id;
-            fetchedPosts.push(postContent);
-          });
-          setPosts(fetchedPosts);
-          setNoUserMessage(true);
+    if (user != null && posts === null) {
+      if (loggedIn.status) {
+        let fetchedPosts = [];
+        let fetchedLikes = [];
+        const getData = async () => {
+          await fb
+            .firestore()
+            .collection('posts')
+            .where('uid', '==', user.selectedUser)
+            .orderBy('date', 'desc')
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                let data = doc.data();
+                data.id = doc.id;
+                fetchedPosts.push(data);
+              });
+            });
+          await fb
+            .firestore()
+            .collection('likes')
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                fetchedLikes.push({ id: doc.id, data: doc.data() });
+              });
+              fetchedPosts.forEach((post) => {
+                post.liked = false;
+                post.like = null;
+                fetchedLikes.forEach((like) => {
+                  if (
+                    like.data.postId === post.postId &&
+                    like.data.uid === loggedIn.user.uid
+                  ) {
+                    post.liked = true;
+                    post.like = like.id;
+                  }
+                });
+              });
+              setPosts(fetchedPosts);
+            });
+        };
+        getData();
+        // setLoading(false);
+      }
+    }
+  }, [loggedIn]);
+
+  const onLikeHandler = async (info) => {
+    console.log(info);
+    if (info.liked) {
+      try {
+        await fb.firestore().collection('likes').doc(info.like).delete();
+        let updatedPosts = [...posts];
+        updatedPosts.forEach((post) => {
+          if (info.postId === post.postId) {
+            post.liked = false;
+          }
         });
-  });
+        setPosts(updatedPosts);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await fb
+          .firestore()
+          .collection('likes')
+          .add({
+            postId: info.postId,
+            uid: loggedIn.user.uid,
+            user: loggedIn.user.displayName,
+          })
+          .then((docRef) => {
+            let updatedPosts = [...posts];
+            updatedPosts.forEach((post) => {
+              if (info.postId === post.postId) {
+                post.liked = true;
+                post.like = docRef.id;
+                post.likes += 1;
+              }
+            });
+            setPosts(updatedPosts);
+          });
+        // await fb.firestore().collection().doc()
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   let userName = null;
   if (user != null) {
@@ -71,7 +145,7 @@ const OtherProfile = () => {
 
   let displayedPosts = null;
   if (posts != null) {
-    displayedPosts = <Posts posts={posts} />;
+    displayedPosts = <Posts posts={posts} onLike={onLikeHandler} />;
   }
 
   return (

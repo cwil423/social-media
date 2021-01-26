@@ -1,13 +1,16 @@
+import React, { useState, useContext } from 'react';
 import { Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import { fb } from '../../../Firebase/firebase';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Button } from '@material-ui/core';
 import classes from './Post.module.css';
 import Modal from '../../UI/Modal/Modal';
+import { authContext } from '../../../Context/authContext';
 
 const Post = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [loggedIn] = useContext(authContext);
 
   const closeModalHandler = (bool) => {
     setModalOpen(!modalOpen);
@@ -60,8 +63,16 @@ const Post = (props) => {
       <div>
         <Typography variant="body1">{props.info.post}</Typography>
       </div>
-      <div className={classes.like} onClick={() => console.log('yeeaaaah')}>
-        <FavoriteBorderIcon />
+
+      <div className={classes.like}>
+        <div className={classes.likeStuff}>
+          <Typography variant="subtitle1">{props.info.likes}</Typography>
+          {props.liked ? (
+            <FavoriteIcon onClick={() => props.onLike(props.info)} />
+          ) : (
+            <FavoriteBorderIcon onClick={() => props.onLike(props.info)} />
+          )}
+        </div>
       </div>
     </div>
   );

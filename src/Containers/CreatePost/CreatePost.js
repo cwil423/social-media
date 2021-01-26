@@ -32,7 +32,7 @@ const CreatePost = (props) => {
     let time =
       hours + ':' + minutes + ' ' + ampm + ' ' + mm + '/' + dd + '/' + yyyy;
     let postId = Math.random();
-    let content = { post, user, date, time, photo, uid, postId };
+    let content = { post, user, date, time, photo, uid, postId, likes: 0 };
     // props.postSubmited(content)
     fb.firestore().collection('posts').add(content);
     history.push('./home_page');

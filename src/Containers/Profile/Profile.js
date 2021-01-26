@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { fb } from '../../Firebase/firebase';
 import { Button, Card, TextField, Typography } from '@material-ui/core';
 import { authContext } from '../../Context/authContext';
@@ -19,6 +19,53 @@ const Profile = (props) => {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [photo, setPhoto] = useState();
+
+  useEffect(() => {
+    if (loggedIn.status) {
+      let fetchedPosts = [];
+      let fetchedLikes = [];
+      const getData = async () => {
+        await fb
+          .firestore()
+          .collection('posts')
+          .where('uid', '==', loggedIn.user.uid)
+          .orderBy('date', 'desc')
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              let data = doc.data();
+              data.id = doc.id;
+              fetchedPosts.push(data);
+            });
+          });
+        await fb
+          .firestore()
+          .collection('likes')
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              fetchedLikes.push({ id: doc.id, data: doc.data() });
+            });
+            fetchedPosts.forEach((post) => {
+              post.liked = false;
+              post.like = null;
+              fetchedLikes.forEach((like) => {
+                if (
+                  like.data.postId === post.postId &&
+                  like.data.uid === loggedIn.user.uid
+                ) {
+                  post.liked = true;
+                  post.like = like.id;
+                }
+              });
+            });
+            setPosts(fetchedPosts);
+          });
+      };
+      getData();
+      setLoading(false);
+    }
+  }, [loggedIn]);
 
   const submitPhotoHandler = (photo) => {
     fb.auth().currentUser.updateProfile({
@@ -52,6 +99,49 @@ const Profile = (props) => {
       });
   };
 
+  const onLikeHandler = async (info) => {
+    console.log(info);
+    if (info.liked) {
+      try {
+        await fb.firestore().collection('likes').doc(info.like).delete();
+        let updatedPosts = [...posts];
+        updatedPosts.forEach((post) => {
+          if (info.postId === post.postId) {
+            post.liked = false;
+          }
+        });
+        setPosts(updatedPosts);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await fb
+          .firestore()
+          .collection('likes')
+          .add({
+            postId: info.postId,
+            uid: loggedIn.user.uid,
+            user: loggedIn.user.displayName,
+          })
+          .then((docRef) => {
+            let updatedPosts = [...posts];
+            updatedPosts.forEach((post) => {
+              if (info.postId === post.postId) {
+                post.liked = true;
+                post.like = docRef.id;
+                post.likes += 1;
+              }
+            });
+            setPosts(updatedPosts);
+          });
+        // await fb.firestore().collection().doc()
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   let userPhoto = null;
   if (loggedIn.user != null) {
     if (loggedIn.user.photoURL === null) {
@@ -67,23 +157,23 @@ const Profile = (props) => {
     }
   }
 
-  if (loggedIn.user != null && posts === null) {
-    let fetchedPosts = [];
-    fb.firestore()
-      .collection('posts')
-      .where('uid', '==', loggedIn.user.uid)
-      .orderBy('date', 'desc')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          let postContent = doc.data();
-          postContent.postId = doc.id;
-          fetchedPosts.push(postContent);
-        });
-        setPosts(fetchedPosts);
-        setLoading(false);
-      });
-  }
+  // if (loggedIn.user != null && posts === null) {
+  //   let fetchedPosts = [];
+  //   fb.firestore()
+  //     .collection('posts')
+  //     .where('uid', '==', loggedIn.user.uid)
+  //     .orderBy('date', 'desc')
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         let postContent = doc.data();
+  //         postContent.postId = doc.id;
+  //         fetchedPosts.push(postContent);
+  //       });
+  //       setPosts(fetchedPosts);
+  //       setLoading(false);
+  //     });
+  // }
 
   let displayedPosts = (
     <Card className={classes.placeholder}>
@@ -97,6 +187,7 @@ const Profile = (props) => {
       displayedPosts = (
         <Posts
           posts={posts}
+          onLike={onLikeHandler}
           deletable={true}
           onDelete={(postId) => onDeleteHandler(postId)}
           modal={() => setModalOpen(!modalOpen)}

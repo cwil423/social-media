@@ -51,8 +51,8 @@
   padding-top: 10px;
 }
 
-.liked {
+.likeStuff {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 10px;
+  justify-content: space-around;
+  width: 10%;
 }

@@ -6,6 +6,8 @@ const Posts = (props) => {
     return (
       <Post
         key={Math.random()}
+        onLike={props.onLike}
+        liked={post.liked}
         info={post}
         modal={props.modal}
         deletable={props.deletable}
