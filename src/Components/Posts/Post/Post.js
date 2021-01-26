@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography, IconButton } from '@material-ui/core';
 import { fb } from '../../../Firebase/firebase';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -15,7 +15,7 @@ const Post = (props) => {
   const closeModalHandler = (bool) => {
     setModalOpen(!modalOpen);
     if (bool) {
-      props.onDelete(props.info.postId);
+      props.onDelete(props.info.id);
     }
   };
 
@@ -68,9 +68,19 @@ const Post = (props) => {
         <div className={classes.likeStuff}>
           <Typography variant="subtitle1">{props.info.likes}</Typography>
           {props.liked ? (
-            <FavoriteIcon onClick={() => props.onLike(props.info)} />
+            <IconButton
+              disabled={props.likeButtonDisabled}
+              onClick={() => props.onLike(props.info)}
+            >
+              <FavoriteIcon color="secondary" />
+            </IconButton>
           ) : (
-            <FavoriteBorderIcon onClick={() => props.onLike(props.info)} />
+            <IconButton
+              disabled={props.likeButtonDisabled}
+              onClick={() => props.onLike(props.info)}
+            >
+              <FavoriteBorderIcon />
+            </IconButton>
           )}
         </div>
       </div>

@@ -54,5 +54,6 @@
 .likeStuff {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 10%;
 }

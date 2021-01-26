@@ -12,6 +12,7 @@ import PageHeader from '../Navigation/pageHeader';
 const OtherProfile = () => {
   const [posts, setPosts] = useState(null);
   const [noUserMessage, setNoUserMessage] = useState();
+  const [likeButtonDisabled, setLikeButtonDisabled] = useState(false);
   const [loggedIn] = useContext(authContext);
 
   const user = useSelector((state) => state);
@@ -85,7 +86,7 @@ const OtherProfile = () => {
   }, [loggedIn]);
 
   const onLikeHandler = async (info) => {
-    console.log(info);
+    setLikeButtonDisabled(true);
     if (info.liked) {
       try {
         await fb
@@ -140,6 +141,7 @@ const OtherProfile = () => {
         console.log(error);
       }
     }
+    setLikeButtonDisabled(false);
   };
 
   let userName = null;
@@ -160,7 +162,13 @@ const OtherProfile = () => {
 
   let displayedPosts = null;
   if (posts != null) {
-    displayedPosts = <Posts posts={posts} onLike={onLikeHandler} />;
+    displayedPosts = (
+      <Posts
+        posts={posts}
+        onLike={onLikeHandler}
+        likeButtonDisabled={likeButtonDisabled}
+      />
+    );
   }
 
   return (

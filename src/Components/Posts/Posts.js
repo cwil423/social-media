@@ -8,6 +8,7 @@ const Posts = (props) => {
         key={Math.random()}
         onLike={props.onLike}
         liked={post.liked}
+        likeButtonDisabled={props.likeButtonDisabled}
         info={post}
         modal={props.modal}
         deletable={props.deletable}
@@ -18,7 +19,6 @@ const Posts = (props) => {
     );
   });
 
-  console.log('[Posts] render');
   return <React.Fragment>{posts}</React.Fragment>;
 };
 

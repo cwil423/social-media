@@ -15,6 +15,7 @@ import { authContext } from '../../Context/authContext';
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [likeButtonDisabled, setLikeButtonDisabled] = useState(false);
   const [loggedIn] = useContext(authContext);
   const dispatch = useDispatch();
 
@@ -72,6 +73,7 @@ const HomePage = () => {
   };
 
   const onLikeHandler = async (info) => {
+    setLikeButtonDisabled(true);
     if (info.liked) {
       try {
         await fb
@@ -90,8 +92,6 @@ const HomePage = () => {
           }
         });
         setPosts(updatedPosts);
-
-        console.log('removed like');
       } catch (error) {
         console.log(error);
       }
@@ -123,19 +123,17 @@ const HomePage = () => {
             });
             setPosts(updatedPosts);
           });
-
-        console.log('removed like');
       } catch (error) {
         console.log(error);
       }
     }
+    setLikeButtonDisabled(false);
   };
 
   let spinner = <Spinner />;
   if (loading === false) {
     spinner = null;
   }
-  console.log('[Homepage] render');
   return (
     <div className={classes.homepage}>
       <SideMenu />
@@ -145,6 +143,7 @@ const HomePage = () => {
         {spinner}
         <Posts
           posts={posts}
+          likeButtonDisabled={likeButtonDisabled}
           onLike={onLikeHandler}
           clickable={true}
           clicked={(uid, photo, user) => onClickHandler(uid, photo, user)}

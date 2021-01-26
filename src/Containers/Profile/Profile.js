@@ -18,6 +18,7 @@ const Profile = (props) => {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [likeButtonDisabled, setLikeButtonDisabled] = useState(false);
   const [photo, setPhoto] = useState();
 
   useEffect(() => {
@@ -100,7 +101,7 @@ const Profile = (props) => {
   };
 
   const onLikeHandler = async (info) => {
-    console.log(info);
+    setLikeButtonDisabled(true);
     if (info.liked) {
       try {
         await fb
@@ -155,6 +156,7 @@ const Profile = (props) => {
         console.log(error);
       }
     }
+    setLikeButtonDisabled(false);
   };
 
   let userPhoto = null;
@@ -172,24 +174,6 @@ const Profile = (props) => {
     }
   }
 
-  // if (loggedIn.user != null && posts === null) {
-  //   let fetchedPosts = [];
-  //   fb.firestore()
-  //     .collection('posts')
-  //     .where('uid', '==', loggedIn.user.uid)
-  //     .orderBy('date', 'desc')
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         let postContent = doc.data();
-  //         postContent.postId = doc.id;
-  //         fetchedPosts.push(postContent);
-  //       });
-  //       setPosts(fetchedPosts);
-  //       setLoading(false);
-  //     });
-  // }
-
   let displayedPosts = (
     <Card className={classes.placeholder}>
       <Typography variant="h6">
@@ -203,6 +187,7 @@ const Profile = (props) => {
         <Posts
           posts={posts}
           onLike={onLikeHandler}
+          likeButtonDisabled={likeButtonDisabled}
           deletable={true}
           onDelete={(postId) => onDeleteHandler(postId)}
           modal={() => setModalOpen(!modalOpen)}
@@ -216,7 +201,9 @@ const Profile = (props) => {
     page = (
       <div className={classes.profile}>
         <div className={classes.profileSection}>
-          <h1>{loggedIn.user.displayName}</h1>
+          <Typography color="primary" variant="h4">
+            {loggedIn.user.displayName}
+          </Typography>
 
           {userPhoto}
           {editingPhoto ? (
@@ -252,7 +239,6 @@ const Profile = (props) => {
     );
   }
 
-  console.log('[Profile] render');
   return (
     <div className={classes.profilePage}>
       <PageHeader title="Profile" />
