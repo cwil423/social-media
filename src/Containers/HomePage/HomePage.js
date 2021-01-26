@@ -72,22 +72,38 @@ const HomePage = () => {
   };
 
   const onLikeHandler = async (info) => {
-    console.log(info);
     if (info.liked) {
       try {
+        await fb
+          .firestore()
+          .collection('posts')
+          .doc(info.id)
+          .update({
+            likes: info.likes - 1,
+          });
         await fb.firestore().collection('likes').doc(info.like).delete();
         let updatedPosts = [...posts];
         updatedPosts.forEach((post) => {
           if (info.postId === post.postId) {
             post.liked = false;
+            post.likes -= 1;
           }
         });
         setPosts(updatedPosts);
+
+        console.log('removed like');
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
+        await fb
+          .firestore()
+          .collection('posts')
+          .doc(info.id)
+          .update({
+            likes: info.likes + 1,
+          });
         await fb
           .firestore()
           .collection('likes')
@@ -107,7 +123,8 @@ const HomePage = () => {
             });
             setPosts(updatedPosts);
           });
-        // await fb.firestore().collection().doc()
+
+        console.log('removed like');
       } catch (error) {
         console.log(error);
       }
@@ -133,7 +150,6 @@ const HomePage = () => {
           clicked={(uid, photo, user) => onClickHandler(uid, photo, user)}
         />
       </div>
-      <Button onClick={() => console.log(posts)}>posts</Button>
     </div>
   );
 };

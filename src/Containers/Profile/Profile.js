@@ -103,11 +103,19 @@ const Profile = (props) => {
     console.log(info);
     if (info.liked) {
       try {
+        await fb
+          .firestore()
+          .collection('posts')
+          .doc(info.id)
+          .update({
+            likes: info.likes - 1,
+          });
         await fb.firestore().collection('likes').doc(info.like).delete();
         let updatedPosts = [...posts];
         updatedPosts.forEach((post) => {
           if (info.postId === post.postId) {
             post.liked = false;
+            post.likes -= 1;
           }
         });
         setPosts(updatedPosts);
@@ -116,6 +124,13 @@ const Profile = (props) => {
       }
     } else {
       try {
+        await fb
+          .firestore()
+          .collection('posts')
+          .doc(info.id)
+          .update({
+            likes: info.likes + 1,
+          });
         await fb
           .firestore()
           .collection('likes')
